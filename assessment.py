@@ -15,15 +15,35 @@ go below this docstring.
 
 #    (a) Write a function that takes a town name as a string and evaluates to
 #        `True` if it is your hometown, and `False` otherwise.
+def is_hometown(town):
+    """Return True if argument is user's hometown, False otherwise"""
+
+    return town == "Vitebsk"
+
 
 #    (b) Write a function that takes a first and last name as arguments and
 #        returns the concatenation of the two names in one string.
+def full_name(first_name, last_name):
+    """Return concatenation of two input arguments"""
+
+    return "%s %s" % (first_name, last_name)
+
 
 #    (c) Write a function that takes a home town, a first name, and a last name
 #        as arguments, calls both functions from part (a) and (b) and prints
 #        "Hi, 'full name here', we're from the same place!", or "Hi 'full name
 #        here', I'd like to visit 'town name here'!" depending on what the function
 #        from part (a) evaluates to.
+def new_friends(hometown, first_name, last_name):
+    """Print friendly messages using simple AI"""
+
+    name = full_name(first_name, last_name)
+
+    if is_hometown(hometown):
+        print "Hi, %s, we're from the same place!" % (name)
+    else:
+        print "Hi %s, I'd like to visit 'town name here'!" % (name)
+
 
 ###############################################################################
 
@@ -70,7 +90,7 @@ def is_berry(fruit):
 
     """
 
-    pass
+    return fruit in ['strawberry', 'raspberry', 'blackberry']
 
 
 def shipping_cost(fruit):
@@ -84,7 +104,10 @@ def shipping_cost(fruit):
 
     """
 
-    pass
+    if is_berry(fruit):
+        return 0
+    else:
+        return 5
 
 
 def append_to_list(lst, num):
@@ -95,11 +118,12 @@ def append_to_list(lst, num):
     [3, 5, 7, 2]
 
     """
+    lst = lst[:]
+    lst.append(num)
+    return lst
 
-    pass
 
-
-def calculate_price(FILL_ME_IN):
+def calculate_price(price, state, tax  = .05):
     """Calculate total price of an item, figuring in state taxes and fees.
 
     >>> calculate_price(40, "CA")
@@ -121,8 +145,21 @@ def calculate_price(FILL_ME_IN):
     135.3
 
     """
+    price_with_tax = price + price * tax
 
-    pass
+    price_with_fee = price_with_tax
+
+    if state == "CA":
+        price_with_fee += price_with_fee * .03
+    elif state == "PA":
+        price_with_fee += 2
+    elif state == "MA":
+        if price_with_fee < 100:
+            price_with_fee += 1
+        else:
+            price_with_fee += 3
+
+    return price_with_fee
 
 
 ###############################################################################
@@ -137,6 +174,23 @@ def calculate_price(FILL_ME_IN):
 #        isn't something we've discussed yet in class; you might need to google how to
 #        write a Python function that takes in an arbitrary number of arguments.
 
+
+def dynamic_append(lst, *args):
+    """Return argument appended with any given additional arguments
+
+    >>> dynamic_append([1, 2, 3], "CA", "Ml", None, "Unicorn", 5, [1])
+    [1, 2, 3, 'CA', 'Ml', None, 'Unicorn', 5, [1]]
+
+    >>> dynamic_append([], None)
+    [None]
+    """
+
+    for arg in args:
+        lst.append(arg)
+
+    return lst
+
+
 #    (b) Make a new function with a nested inner function.
 #        The outer function will take in a word.
 #        The inner function will multiply that word by 3.
@@ -148,6 +202,20 @@ def calculate_price(FILL_ME_IN):
 
 #        >>> outer("Balloonicorn")
 #        ('Balloonicorn', 'BalloonicornBalloonicornBalloonicorn')
+
+def outer(string):
+    """Print tuple with function argument and the result of inner function call
+
+       >>> outer("Balloonicorn")
+       ('Balloonicorn', 'BalloonicornBalloonicornBalloonicorn')
+    """
+
+    def repeater():
+        """Return outer scope variable string repeated three times"""
+
+        return string * 3
+
+    print (string, repeater())
 
 
 ###############################################################################
