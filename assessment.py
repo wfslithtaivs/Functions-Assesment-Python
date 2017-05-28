@@ -43,7 +43,7 @@ def new_friends(hometown, first_name, last_name):
     if is_hometown(hometown):
         print "Hi, %s, we're from the same place!" % (name)
     else:
-        print "Hi %s, I'd like to visit 'town name here'!" % (name)
+        print "Hi %s, I'd like to visit %s!" % (name, hometown)
 
 
 ###############################################################################
